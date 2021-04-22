@@ -40,6 +40,7 @@ class HomePage(Page):
 
     body = StreamField([
         ("title", blocks.TitleBlock()),
+        ("cards", blocks.CardsBlock()),
     ], null=True, blank=True)
 
     content_panels = Page.content_panels + [
