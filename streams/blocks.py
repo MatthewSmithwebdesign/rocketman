@@ -40,7 +40,7 @@ class Card(blocks.StructBlock):
     link = Link(help_text="Enter a link or select a page")
 
 
-class CardsBlock (blocks.StructBlock):
+class CardsBlock(blocks.StructBlock):
 
     cards= blocks.ListBlock(
         Card()
