@@ -14,6 +14,17 @@ class TitleBlock(blocks.StructBlock):
         help_text = "Center text to display"
 
 
+class LinkValue(blocks.StructValue):
+    """ Logic for links"""
+    def url(self) -> str:
+        internal_page = self.get("internal_page")
+        external_link = self.get("external_link")
+        if internal_page:
+            return internal_page.url
+        elif external_link:
+            return external_link
+        return ""
+
 class Link(blocks.StructBlock):
     link_text = blocks.CharBlock(
         max_length=50,
@@ -25,6 +36,9 @@ class Link(blocks.StructBlock):
     external_link = blocks.URLBlock(
         required=False
     )
+
+    class Meta:
+        value_class = LinkValue
 
 class Card(blocks.StructBlock):
     title = blocks.CharBlock(
