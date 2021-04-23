@@ -9,20 +9,41 @@ class TitleBlock(blocks.StructBlock):
 
     class Meta:
         template = "streams/title_block.html"
-        icon = " edit"
+        icon = "edit"
         label = "Title"
-        help_text = " Center text to display"
+        help_text = "Center text to display"
+
+
+class Link(blocks.StructBlock):
+    link_text = blocks.CharBlock(
+        max_length=50,
+        default='More Details'
+    )
+    internal_page = blocks.PageChooserBlock(
+        required=False
+    )
+    external_link = blocks.URLBlock(
+        required=False
+    )
+
+class Card(blocks.StructBlock):
+    title = blocks.CharBlock(
+        max_length=100,
+        help_text="Bold text for this card max length of 100 characters.",
+        required=False
+
+    )
+    image= ImageChooserBlock(
+        help_text="Image will be auto cropped to 570px by 370px."
+
+    )
+    link = Link(help_text="Enter a link or select a page")
+
 
 class CardsBlock (blocks.StructBlock):
 
     cards= blocks.ListBlock(
-        blocks.StructBlock(
-            [
-                ("title", blocks.CharBlock(max_length=100, help_text="Bold text for this card max length of 100 characters.")),
-                ("text", blocks.TextBlock(max_length=355, help_text="Optional text for the card. Max length is 355 characters.", required=False)),
-                ("image", ImageChooserBlock(help_text="Image will me auto cropped to 570px by 370px")),
-            ]
-        )
+        Card()
     )
     class Meta:
         template = "streams/cards_block.html"
