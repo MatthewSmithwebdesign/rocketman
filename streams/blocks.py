@@ -1,5 +1,7 @@
+from django import forms
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.embeds.blocks import EmbedBlock
 
 class TitleBlock(blocks.StructBlock):
     text = blocks.CharBlock(
@@ -63,5 +65,46 @@ class CardsBlock(blocks.StructBlock):
         template = "streams/cards_block.html"
         icon = "image"
         label = "Standard Cards"
+
+class RadioSelectBlock(blocks.ChoiceBlock):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.field.widget =forms.RadioSelect(
+            choices=self.field.widget.choices
+        )
+
+
+class ImageAndTextBlock(blocks.StructBlock):
+
+    image = ImageChooserBlock (help_text='will be cropped to 786x562px')
+    image_alignment = RadioSelectBlock(
+        choices=(
+            ("left", "Image to the left"),
+            ("right", "Image to the right")
+        ),
+        default='left',
+        help_text='Image on the left with text on the right or Image on the right and text on the left'
+    )
+    title = blocks.CharBlock(max_length=60, help_text=' max length is 60 characters')
+    text = blocks.CharBlock(max_length=140, required=False)
+    link = Link()
+
+    class Meta:
+      template = "streams/image_and_text_block.html"
+      icon = "image"
+      label = "Image & Text"
+
+class CallToActionBlock(blocks.StructBlock):
+    title = blocks.CharBlock(max_length=200, help_text='max length is 200 characters')
+    link = Link()
+
+    class Meta:
+        template ="streams/call_to_action_block.html"
+        icon = "plus"
+        label = "Call to Action"
+
+''' embed stream field'''
+'''class YouTubeEmbed(blocks.StructBlock):
+    youtube_id = models.CharField()'''
 
 
