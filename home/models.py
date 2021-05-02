@@ -2,10 +2,12 @@ from django.db import models
 
 from wagtail.core.models import Page
 from wagtail.core.fields import StreamField
-from wagtail.admin.edit_handlers import FieldPanel,StreamFieldPanel, PageChooserPanel
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, PageChooserPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.snippets.blocks import SnippetChooserBlock
 
 from streams import blocks
+
 
 class HomePage(Page):
     lead_text = models.CharField(
@@ -38,13 +40,23 @@ class HomePage(Page):
         on_delete=models.SET_NULL,
     )
 
-    body = StreamField([
-        ("title", blocks.TitleBlock()),
-        ("cards", blocks.CardsBlock()),
-        ("image_and_text", blocks.ImageAndTextBlock()),
-        ("cta", blocks.CallToActionBlock()),
-    ], null=True, blank=True)
-
+    body = StreamField(
+        [
+            ("title", blocks.TitleBlock()),
+            ("cards", blocks.CardsBlock()),
+            ("image_and_text", blocks.ImageAndTextBlock()),
+            ("cta", blocks.CallToActionBlock()),
+            (
+                "testimonial",
+                SnippetChooserBlock(
+                    target_model="testimonials.Testimonial",
+                    template="streams/testimonial_block.html",
+                ),
+            ),
+        ],
+        null=True,
+        blank=True,
+    )
     content_panels = Page.content_panels + [
         FieldPanel("lead_text"),
         PageChooserPanel("button"),
@@ -52,5 +64,3 @@ class HomePage(Page):
         ImageChooserPanel("banner_background_image"),
         StreamFieldPanel("body"),
     ]
-
-
