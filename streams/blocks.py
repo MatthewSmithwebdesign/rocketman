@@ -2,6 +2,7 @@ from django import forms
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
+from wagtail.contrib.table_block.blocks import TableBlock
 
 class TitleBlock(blocks.StructBlock):
     text = blocks.CharBlock(
@@ -106,5 +107,15 @@ class CallToActionBlock(blocks.StructBlock):
 ''' embed stream field'''
 '''class YouTubeEmbed(blocks.StructBlock):
     youtube_id = models.CharField()'''
+
+class PricingTableBlock(TableBlock):
+    """ pricing table block """
+
+    class Meta:
+        template = "streams/pricing_table_block.html"
+        label = "Pricing Table"
+        icon = "table"
+        help_text = "Your pricing tables should have four columns"
+
 
 

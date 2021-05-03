@@ -9,6 +9,32 @@ from wagtail.snippets.blocks import SnippetChooserBlock
 from streams import blocks
 
 
+NEW_TABLE_OPTIONS = {
+    "minSpareRows": 0,
+    "startRows": 4,
+    "startCols": 4,
+    "colHeaders": False,
+    "rowHeaders": True,
+    "contextMenu": [
+        "row_above",
+        "row_below",
+        "---------",
+        "col_left",
+        "col_right",
+        "---------",
+        "remove_row",
+        "remove_col",
+        "---------",
+        "undo",
+        "redo",
+    ],
+    "editor": "text",
+    "stretchH": "all",
+    "renderer": "text",
+    "autoColumnSize": False,
+}
+
+
 class HomePage(Page):
     lead_text = models.CharField(
         max_length=140,
@@ -52,6 +78,10 @@ class HomePage(Page):
                     target_model="testimonials.Testimonial",
                     template="streams/testimonial_block.html",
                 ),
+            ),
+            (
+                "pricing_table",
+                blocks.PricingTableBlock(table_options=NEW_TABLE_OPTIONS),
             ),
         ],
         null=True,
