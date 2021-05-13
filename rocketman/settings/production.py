@@ -15,10 +15,10 @@ CACHES = {
 
 DATABASES ={
     "default": {
-        "ENGINE": 'django.db.backends.postgresgl_psycopg2',
+        "ENGINE": 'django.db.backends.postgresql_psycopg2',
         "NAME": 'rocketman',
         "USER": 'rocketman',
-        "PASSWORD" = os.environ['PASSWORD'],
+        "PASSWORD":  os.environ['PASSWORD'],
         "HOST": 'localhost',
         "PORT": "",
     }
@@ -39,7 +39,7 @@ sentry_sdk.init(
     # If you wish to associate users to errors (assuming you are using
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
-
+)
 try:
     from .local import *
 except ImportError:
