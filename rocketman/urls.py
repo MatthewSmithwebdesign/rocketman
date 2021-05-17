@@ -42,7 +42,8 @@ urlpatterns = urlpatterns + [
     #    path("pages/", include(wagtail_urls)),
 ]
 
-urlpatterns = [
-    path('__debug__/', include(debug_toolbar.urls)),
+if settings.DEBUG:
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
 
 ] + urlpatterns
